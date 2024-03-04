@@ -7,15 +7,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_zakat/app.dart';
-
 import 'package:my_zakat/main.dart';
-import 'package:my_zakat/user_repository/lib/src/firebase_user_repo.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(FirebaseUserRepo()));
+    await tester.pumpWidget(MyApplication());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
