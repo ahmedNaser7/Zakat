@@ -16,26 +16,35 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends BaseState<RegisterScreen,RegisterViewModel>
-    implements RegisterNavigator{
+class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
+    implements RegisterNavigator {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
   String firstName = '';
-
   String lastName = '';
-
   String email = '';
-
   String password = '';
-
   String userName = '';
+
+  final Color customColor = Color(0xFFCB9C12); // Custom color
 
   @override
   void initState() {
     super.initState();
-    // don't forget
     viewModel.navigator = this;
+  }
+
+  InputDecoration customInputDecoration(String labelText) {
+    return InputDecoration(
+      labelText: labelText,
+      labelStyle: TextStyle(color: customColor),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: customColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: customColor),
+      ),
+    );
   }
 
   @override
@@ -56,6 +65,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen,RegisterViewModel>
                 backgroundColor: Colors.transparent,
                 title: Text(
                   'Create Account',
+                  style: TextStyle(color: customColor),
                 ),
               ),
               body: Container(
@@ -67,86 +77,58 @@ class _RegisterScreenState extends BaseState<RegisterScreen,RegisterViewModel>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormField(
-                        decoration: InputDecoration(labelText: 'First Name'),
+                        decoration: customInputDecoration('First Name'),
+                        style: TextStyle(color: Colors.black), // Text input color changed to black
                         onChanged: (text) {
                           firstName = text;
                         },
-                        validator: (text) {
-                          if (text == null || text.trim().isEmpty) {
-                            return 'Please enter first Name';
-                          }
-                          return null;
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        decoration: customInputDecoration('Last Name'),
+                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        onChanged: (text) {
+                          lastName = text;
                         },
                       ),
+                      SizedBox(height: 10),
                       TextFormField(
-                          decoration: InputDecoration(labelText: 'Last Name'),
-                          onChanged: (text) {
-                            lastName = text;
-                          },
-                          validator: (text) {
-                            if (text == null || text.trim().isEmpty) {
-                              return 'Please enter last Name';
-                            }
-                            return null;
-                          }),
+                        decoration: customInputDecoration('User Name'),
+                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        onChanged: (text) {
+                          userName = text;
+                        },
+                      ),
+                      SizedBox(height: 10),
                       TextFormField(
-                          decoration: InputDecoration(labelText: 'User Name'),
-                          onChanged: (text) {
-                            userName = text;
-                          },
-                          validator: (text) {
-                            if (text == null || text.trim().isEmpty) {
-                              return 'Please enter user Name';
-                            }
-                            if (text.contains(' ')) {
-                              return 'user name must not contains white spaces';
-                            }
-                            return null;
-                          }),
+                        decoration: customInputDecoration('Email'),
+                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        onChanged: (text) {
+                          email = text;
+                        },
+                      ),
+                      SizedBox(height: 10),
                       TextFormField(
-                          decoration: InputDecoration(labelText: 'Email'),
-                          onChanged: (text) {
-                            email = text;
-                          },
-                          validator: (text) {
-                            if (text == null || text.trim().isEmpty) {
-                              return 'Please enter Email';
-                            }
-
-                            bool emailValid = RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(text);
-                            if (!emailValid) {
-                              return 'email format not valid';
-                            }
-                            return null;
-                          }),
-                      TextFormField(
-                        decoration: InputDecoration(labelText: 'Password'),
+                        decoration: customInputDecoration('Password'),
+                        style: TextStyle(color: Colors.black), // Text input color changed to black
                         onChanged: (text) {
                           password = text;
                         },
-                        validator: (text) {
-                          if (text == null || text.trim().isEmpty) {
-                            return 'please enter password';
-                          }
-                          if (text.trim().length < 6) {
-                            return 'password should be at least 6 chars';
-                          }
-                          return null;
-                        },
                       ),
+                      SizedBox(height: 20),
                       ElevatedButton(
-                          onPressed: () {
-                            validateForm();
-                          },
-                          child: Text('Create Account')),
+                          onPressed: validateForm,
+                          child: Text('Create Account', style: TextStyle(color: Colors.white)),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(customColor),
+                          )),
+                      SizedBox(height: 10),
                       InkWell(
-                          onTap: (){
-                            Navigator.pushReplacementNamed(context,
-                                LoginScreen.routeName);
-                          },
-                          child: Text("Already have an account ? "))
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                        },
+                        child: Text("Already have an account ? ", style: TextStyle(color: customColor)),
+                      ),
                     ],
                   ),
                 ),
@@ -160,8 +142,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen,RegisterViewModel>
 
   void validateForm() {
     if (formKey.currentState?.validate() == true) {
-      // create Account
-      viewModel.register(email, password,firstName,lastName,userName);
+      viewModel.register(email, password, firstName, lastName, userName);
     }
   }
 
@@ -173,9 +154,8 @@ class _RegisterScreenState extends BaseState<RegisterScreen,RegisterViewModel>
   @override
   void gotoHome(MyUser user) {
     hideDialog();
-    var userProvider = Provider.of<UserProvider>(context,listen: false);
+    var userProvider = Provider.of<UserProvider>(context, listen: false);
     userProvider.user = user;
-    Navigator.of(context)
-        .pushReplacementNamed(HomeScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }
 }
