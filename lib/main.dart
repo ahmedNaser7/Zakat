@@ -7,29 +7,29 @@ import 'package:provider/provider.dart';
 import 'home/home_screen.dart';
 import 'login/login_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(
-      MultiProvider(
-          providers: [
-            ChangeNotifierProvider<UserProvider>(create: (_)=>UserProvider()),
-          ],
-          child: MyApplication()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+  ], child: MyApplication()));
 }
-class MyApplication extends StatelessWidget{
+
+class MyApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
-        RegisterScreen.routeName:(_)=>RegisterScreen(),
-        LoginScreen.routeName:(_)=>LoginScreen(),
-        HomeScreen.routeName:(_)=>HomeScreen(),
+        RegisterScreen.routeName: (_) => RegisterScreen(),
+        LoginScreen.routeName: (_) => LoginScreen(),
+        HomeScreen.routeName: (_) => HomeScreen(),
       },
-      initialRoute:userProvider.firebaseUser ==null? LoginScreen.routeName:
-      HomeScreen.routeName,
+      initialRoute: userProvider.firebaseUser == null
+          ? LoginScreen.routeName
+          : HomeScreen.routeName,
       title: 'Chat-App',
     );
   }

@@ -26,7 +26,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
   String password = '';
   String userName = '';
 
-  final Color customColor = Color(0xFFCB9C12); // Custom color
+  final Color customColor = Color.fromARGB(255, 59, 129, 214); // Custom color
 
   @override
   void initState() {
@@ -78,7 +78,9 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                     children: [
                       TextFormField(
                         decoration: customInputDecoration('First Name'),
-                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        style: TextStyle(
+                            color: Colors
+                                .black), // Text input color changed to black
                         onChanged: (text) {
                           firstName = text;
                         },
@@ -86,7 +88,9 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       SizedBox(height: 10),
                       TextFormField(
                         decoration: customInputDecoration('Last Name'),
-                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        style: TextStyle(
+                            color: Colors
+                                .black), // Text input color changed to black
                         onChanged: (text) {
                           lastName = text;
                         },
@@ -94,7 +98,9 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       SizedBox(height: 10),
                       TextFormField(
                         decoration: customInputDecoration('User Name'),
-                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        style: TextStyle(
+                            color: Colors
+                                .black), // Text input color changed to black
                         onChanged: (text) {
                           userName = text;
                         },
@@ -102,7 +108,9 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       SizedBox(height: 10),
                       TextFormField(
                         decoration: customInputDecoration('Email'),
-                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        style: TextStyle(
+                            color: Colors
+                                .black), // Text input color changed to black
                         onChanged: (text) {
                           email = text;
                         },
@@ -110,7 +118,9 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       SizedBox(height: 10),
                       TextFormField(
                         decoration: customInputDecoration('Password'),
-                        style: TextStyle(color: Colors.black), // Text input color changed to black
+                        style: TextStyle(
+                            color: Colors
+                                .black), // Text input color changed to black
                         onChanged: (text) {
                           password = text;
                         },
@@ -118,17 +128,25 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       SizedBox(height: 20),
                       ElevatedButton(
                           onPressed: validateForm,
-                          child: Text('Create Account', style: TextStyle(color: Colors.white)),
+                          child: Text('Create Account',
+                              style: TextStyle(color: Colors.white)),
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(customColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(customColor),
                           )),
                       SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                          Navigator.pushReplacementNamed(
+                              context, LoginScreen.routeName);
                         },
-                        child: Text("Already have an account ? ", style: TextStyle(color: customColor)),
-                      ),
+                        child: Text(
+                          "Already have an account? ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: customColor, fontWeight: FontWeight.bold),
+                        ),
+                      )
                     ],
                   ),
                 ),

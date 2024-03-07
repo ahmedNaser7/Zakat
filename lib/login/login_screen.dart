@@ -33,7 +33,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
   var formKey = GlobalKey<FormState>();
 
   // Define the gold color
-  final Color goldColor = Color(0xffcb9c12);
+  final Color goldColor = Color.fromARGB(255, 59, 129, 214);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                         }
 
                         bool emailValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                             .hasMatch(text);
                         if (!emailValid) {
                           return 'Email format not valid';
@@ -124,9 +124,12 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                         validateForm();
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(goldColor),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(goldColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
                       ),
                       child: Text(
@@ -137,11 +140,14 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                     SizedBox(height: 10),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
+                        Navigator.pushReplacementNamed(
+                            context, RegisterScreen.routeName);
                       },
                       child: Text(
-                        "Don't have an account ? ",
-                        style: TextStyle(color: goldColor),
+                        "Don't have an account? ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: goldColor, fontWeight: FontWeight.bold),
                       ),
                     )
                   ],

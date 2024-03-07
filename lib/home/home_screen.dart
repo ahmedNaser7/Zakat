@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:my_zakat/business_logic/knowledge_base.dart';
+import 'package:my_zakat/user_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../base.dart';
 import 'home_view_model.dart';
 import 'navigator.dart';
+import '../login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home';
-
+  var Zakat_Total = 0;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel> implements HomeNavigator {
+class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
+    implements HomeNavigator {
+  final Color goldColor = Color.fromARGB(255, 59, 129, 214);
+
   @override
   HomeViewModel initViewModel() => HomeViewModel();
 
@@ -24,39 +29,228 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel> implements H
 
   @override
   Widget build(BuildContext context) {
-    // Define the custom color
-    Color customColor = Color(0xFFcb9c12); // Use the hex code with 0xFF prefix for opacity
-
-    return ChangeNotifierProvider(
-      create: (_) => viewModel,
-      child: Theme(
-        data: ThemeData(
-          // Apply the custom color to the primarySwatch.
-          // Since primarySwatch expects a MaterialColor, we will use the custom color for primaryColor and accentColor
-          primaryColor: customColor,
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: customColor,
-          ),
-          appBarTheme: AppBarTheme(
-            color: customColor,
-            elevation: 0,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Home Screen',
+          textAlign: TextAlign.center,
         ),
-        child: Builder(
-          builder: (context) => Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              title: Text('Home'),
-            ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                // Navigator.of(context).pushNamed(AddRoomScreen.routeName);
-              },
-            ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              UserProvider userProvider = UserProvider();
+              userProvider.user = null;
+              userProvider.notifyListeners();
+              // Close the current screen
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Welcome Card
+              Card(
+                elevation: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome back!',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'John Doe',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Zakat Total : ',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+
+              // Featured Content Card
+              Card(
+                elevation: 3,
+                child: InkWell(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Zakat details',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text('Check out the latest updates'),
+                      ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          "What is Zakat?",
+                          style: TextStyle(
+                              fontSize: 24.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Zakat is an Islamic practice of giving a portion of ones wealth to those in need.\n It is considered a mandatory act of worship and one of the Five Pillars of Islam.\n The term Zakat is derived from the Arabic word that means to purify or to cleanse.",
+                          style: TextStyle(
+                              fontSize: 16.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          "Calculation of Zakat:",
+                          style: TextStyle(
+                              fontSize: 24.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Zakat is typically calculated as 2.5% of a Muslim's accumulated wealth over a specific period.\n This includes savings, investments, gold, silver, and other assets.\n The purpose of Zakat is to redistribute wealth and ensure that the basic needs of the less fortunate are met.",
+                          style: TextStyle(
+                              fontSize: 16.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          "Distribution of Zakat:",
+                          style: TextStyle(
+                              fontSize: 24.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Zakat is distributed among specific categories of recipients, as outlined in Islamic teachings.\n These categories include the poor, the needy, those in debt,\n those working to collect and distribute Zakat, and others in specific circumstances.",
+                          style: TextStyle(
+                              fontSize: 16.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          "2.5 Percent Rule:",
+                          style: TextStyle(
+                              fontSize: 24.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "The 2.5% rule signifies that a Muslim is required to give 2.5% of their accumulated wealth annually as Zakat.\n This helps maintain social justice and equality within the Muslim community.",
+                          style: TextStyle(
+                              fontSize: 16.0, // Adjust the font size as needed
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to the desired screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ZakatCalculatorScreen()),
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      goldColor), // Set the background color
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      Colors.white), // Set the text color
+                ),
+                child: Text(
+                  'Calculate Zakat',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+
+  // void _showDetailsDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         child: SingleChildScrollView(
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(16.0),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 ListTile(
+  //                   title: Text('Featured Content Details'),
+  //                   subtitle:
+  //                       Text('More information about the featured content'),
+  //                 ),
+  //                 Divider(),
+  //                 Image.network(
+  //                   'https://i.pinimg.com/736x/17/7c/04/177c04215ece52f9d341aaaa878bd347.jpg',
+  //                   height: 200,
+  //                   width: 200,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(16.0),
+  //                   child: Text(
+  //                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  //                     style: TextStyle(fontSize: 16),
+  //                   ),
+  //                 ),
+  //                 ElevatedButton(
+  //                   onPressed: () {
+  //                     Navigator.of(context).pop(); // Close the dialog
+  //                   },
+  //                   child: Text('Close'),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }
