@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
 class BaseViewModel<N extends BaseNavigator> extends ChangeNotifier {
   N? navigator=null;
@@ -26,7 +27,7 @@ abstract class BaseState<T extends StatefulWidget, VM extends BaseViewModel>
         context: context,
         builder: (_) => AlertDialog(
           content: Row(
-            children: [CircularProgressIndicator(), Text(message)],
+            children: [CircularProgressIndicator(), Text(Locales.string(context, 'loading'),)],
           ),
         ),barrierDismissible: isDismissable);
   }

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-
 import '../database_utils.dart';
 import '../provider/base.dart';
 import '../home/home_screen.dart';
@@ -49,7 +49,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
               elevation: 0,
               backgroundColor: Colors.transparent,
               title: Text(
-                'Login',
+                Locales.string(context, 'login'),
                 style: TextStyle(color: goldColor, fontWeight: FontWeight.bold),
               ),
             ),
@@ -63,7 +63,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                   children: [
                     TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: Locales.string(context, 'email'),
                         labelStyle: TextStyle(color: goldColor),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: goldColor),
@@ -94,7 +94,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                     SizedBox(height: 10),
                     TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: Locales.string(context, 'password'),
                         labelStyle: TextStyle(color: goldColor),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: goldColor),
@@ -134,7 +134,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                         ),
                       ),
                       child: Text(
-                        'Login',
+                        Locales.string(context, 'login'),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -145,7 +145,7 @@ class _LoginScreenState extends BaseState<LoginScreen, LoginViewModel>
                             context, RegisterScreen.routeName);
                       },
                       child: Text(
-                        "Don't have an account? ",
+                        Locales.string(context, 'dont_have_an_account'),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: goldColor, fontWeight: FontWeight.bold),
