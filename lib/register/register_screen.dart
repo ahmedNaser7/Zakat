@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
-
 import '../database_utils.dart';
 import '../provider/base.dart';
 import '../home/home_screen.dart';
@@ -65,7 +65,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 title: Text(
-                  'Create Account',
+                  Locales.string(context, 'create_account'),
                   style: TextStyle(color: customColor),
                 ),
               ),
@@ -78,7 +78,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormField(
-                        decoration: customInputDecoration('First Name'),
+                        decoration: customInputDecoration(Locales.string(context, 'first_name')),
                         style: TextStyle(
                             color: Colors
                                 .black), // Text input color changed to black
@@ -88,7 +88,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        decoration: customInputDecoration('Last Name'),
+                        decoration: customInputDecoration(Locales.string(context, 'last_name')),
                         style: TextStyle(
                             color: Colors
                                 .black), // Text input color changed to black
@@ -98,7 +98,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        decoration: customInputDecoration('User Name'),
+                        decoration: customInputDecoration(Locales.string(context, 'user_name')),
                         style: TextStyle(
                             color: Colors
                                 .black), // Text input color changed to black
@@ -108,7 +108,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        decoration: customInputDecoration('Email'),
+                        decoration: customInputDecoration(Locales.string(context, 'email')),
                         style: TextStyle(
                             color: Colors
                                 .black), // Text input color changed to black
@@ -118,7 +118,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        decoration: customInputDecoration('Password'),
+                        decoration: customInputDecoration(Locales.string(context, 'password')),
                         style: TextStyle(
                             color: Colors
                                 .black),
@@ -130,7 +130,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                       SizedBox(height: 20),
                       ElevatedButton(
                           onPressed: validateForm,
-                          child: Text('Create Account',
+                          child: Text(Locales.string(context, 'create_account'),
                               style: TextStyle(color: Colors.white)),
                           style: ButtonStyle(
                             backgroundColor:
@@ -143,7 +143,7 @@ class _RegisterScreenState extends BaseState<RegisterScreen, RegisterViewModel>
                               context, LoginScreen.routeName);
                         },
                         child: Text(
-                          "Already have an account? ",
+                          Locales.string(context, 'already_have_an_account'),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: customColor, fontWeight: FontWeight.bold),
