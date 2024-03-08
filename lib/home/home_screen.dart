@@ -1,14 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_zakat/business_logic/knowledge_base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_zakat/provider/my_user.dart';
 import 'package:provider/provider.dart';
-import '../database_utils.dart';
 import '../provider/base.dart';
 import '../provider/user_provider.dart';
-import 'home_view_model.dart';
-import 'navigator.dart';
 import '../login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -221,48 +217,14 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
     );
   }
 
-  // void _showDetailsDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Dialog(
-  //         child: SingleChildScrollView(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(16.0),
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 ListTile(
-  //                   title: Text('Featured Content Details'),
-  //                   subtitle:
-  //                       Text('More information about the featured content'),
-  //                 ),
-  //                 Divider(),
-  //                 Image.network(
-  //                   'https://i.pinimg.com/736x/17/7c/04/177c04215ece52f9d341aaaa878bd347.jpg',
-  //                   height: 200,
-  //                   width: 200,
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(16.0),
-  //                   child: Text(
-  //                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  //                     style: TextStyle(fontSize: 16),
-  //                   ),
-  //                 ),
-  //                 ElevatedButton(
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop(); // Close the dialog
-  //                   },
-  //                   child: Text('Close'),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+}
+
+
+
+class HomeViewModel extends BaseViewModel<HomeNavigator> {
+
+}
+
+abstract class HomeNavigator extends BaseNavigator{
+
 }
