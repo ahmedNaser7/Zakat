@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../base.dart';
+import '../provider/base.dart';
 import '../database_utils.dart';
 import 'navigator.dart';
 

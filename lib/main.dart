@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_zakat/provider/user_provider.dart';
 import 'package:my_zakat/register/register_screen.dart';
-import 'package:my_zakat/user_provider.dart';
 import 'package:provider/provider.dart';
-
 import 'home/home_screen.dart';
 import 'login/login_screen.dart';
 

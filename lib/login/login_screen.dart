@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../base.dart';
+import '../provider/base.dart';
 import '../home/home_screen.dart';
-import '../my_user.dart';
+import '../provider/my_user.dart';
+import '../provider/user_provider.dart';
 import '../register/register_screen.dart';
-import '../user_provider.dart';
 import 'login_view_model.dart';
 import 'navigator.dart';
 

@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_zakat/business_logic/knowledge_base.dart';
-import 'package:my_zakat/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../base.dart';
+import 'package:my_zakat/provider/my_user.dart';
+import 'package:provider/provider.dart';
+import '../database_utils.dart';
+import '../provider/base.dart';
+import '../provider/user_provider.dart';
 import 'home_view_model.dart';
 import 'navigator.dart';
 import '../login/login_screen.dart';
@@ -25,14 +29,19 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
   void initState() {
     super.initState();
     viewModel.navigator = this;
+    // UserProvider user = UserProvider();
+    // user.initMyUser();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    MyUser? currentUser = Provider.of<UserProvider>(context, listen: false).user;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Home Screen',
+          'Zakaty',
           textAlign: TextAlign.center,
         ),
         centerTitle: true,
@@ -61,9 +70,10 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
             children: [
               // Welcome Card
               Card(
-                elevation: 3,
+                elevation: 1,
+                color: Color.fromARGB(255, 231, 231, 231),
                 child: Padding(
-                  padding: const EdgeInsets.all(30.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,16 +82,17 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Arial'
                         ),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'John Doe',
+                        'Mr. ${currentUser?.fName} ${currentUser?.lName}',
                         style: TextStyle(fontSize: 18),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Zakat Total : ',
+                        'Total : ${currentUser?.total_zakat.toStringAsFixed(2)}',
                         style: TextStyle(fontSize: 18),
                       ),
                     ],
@@ -92,7 +103,8 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
 
               // Featured Content Card
               Card(
-                elevation: 3,
+                elevation: 1,
+                color: Color.fromARGB(255, 231, 231, 231),
                 child: InkWell(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +118,7 @@ class _HomeScreenState extends BaseState<HomeScreen, HomeViewModel>
                       ),
                       Divider(),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(24.0),
                         child: Text(
                           "What is Zakat?",
                           style: TextStyle(

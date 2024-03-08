@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:my_zakat/register/register_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '../base.dart';
+import '../provider/base.dart';
 import '../home/home_screen.dart';
 import '../login/login_screen.dart';
-import '../my_user.dart';
-import '../user_provider.dart';
+import '../provider/my_user.dart';
+import '../provider/user_provider.dart';
 import 'navigator.dart';
 
 class RegisterScreen extends StatefulWidget {
