@@ -1,61 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_zakat/database_utils.dart';
-import 'package:my_zakat/user_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../base.dart';
-import 'knowledge_view_model.dart';
-import 'navigator.dart';
-import '../login/login_screen.dart';
-
-// class KnowledgeBase extends StatefulWidget {
-//   static const String routeName = 'home';
-//   var Zakat_Total = 0;
-//   @override
-//   State<KnowledgeBase> createState() => _KnowledgeBaseState();
-// }
-
-// class _KnowledgeBaseState extends BaseState<KnowledgeBase, KnowledgeViewModel>
-//     implements HomeNavigator {
-//   @override
-//   KnowledgeViewModel initViewModel() => KnowledgeViewModel();
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     viewModel.navigator = this;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Zakat Calculator'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               'Welcome to Zakat Calculator App!',
-//               style: TextStyle(fontSize: 20),
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => ZakatCalculatorScreen()),
-//                 );
-//               },
-//               child: Text('Calculate Zakat'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:my_zakat/home/home_screen.dart';
+import 'package:provider/provider.dart';
+import '../provider/my_user.dart';
+import '../provider/user_provider.dart';
 
 class ZakatCalculatorScreen extends StatefulWidget {
   @override
@@ -79,9 +27,26 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+      return false;
+    },
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Zakat Calculator'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -150,11 +115,12 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
           ),
         ),
       ),
+    )
     );
+
   }
 
   void calculateZakat() async {
-    // Remove keyboard focus
     FocusScope.of(context).unfocus();
 
     double goldWeight = double.tryParse(goldWeightController.text) ?? 0.0;
@@ -235,7 +201,6 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
     double zakatableAssets = totalAssets - debts;
 
     // Calculate Zakat amount (2.5% of zakatable assets)
-
     goldzakatAmount = goldValue * 0.025;
     silverzakatAmount = silverValue * 0.025;
     totalzakatAmount = goldzakatAmount + silverzakatAmount + cashzakatAmount;
@@ -247,53 +212,14 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
       silverzakatAmount = silverzakatAmount;
     });
 
-    UserProvider currentUser = UserProvider();
-    if (currentUser.user != null) {
-      DataBaseUtils.updateTotalZakat(currentUser.user!.id, totalzakatAmount);
+    // Update total_zakat
+    MyUser? currentUser = Provider.of<UserProvider>(context, listen: false).user;
+    if (currentUser != null) {
+      double updatedTotalZakat = totalzakatAmount;
+      currentUser.total_zakat = updatedTotalZakat;
+      await DataBaseUtils.updateUser(currentUser);
+      Provider.of<UserProvider>(context, listen: false).user = currentUser;
+
     }
   }
-  // void _showDetailsDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Dialog(
-  //         child: SingleChildScrollView(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(16.0),
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 ListTile(
-  //                   title: Text('Featured Content Details'),
-  //                   subtitle:
-  //                       Text('More information about the featured content'),
-  //                 ),
-  //                 Divider(),
-  //                 Image.network(
-  //                   'https://i.pinimg.com/736x/17/7c/04/177c04215ece52f9d341aaaa878bd347.jpg',
-  //                   height: 200,
-  //                   width: 200,
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(16.0),
-  //                   child: Text(
-  //                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  //                     style: TextStyle(fontSize: 16),
-  //                   ),
-  //                 ),
-  //                 ElevatedButton(
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop(); // Close the dialog
-  //                   },
-  //                   child: Text('Close'),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }

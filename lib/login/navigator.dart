@@ -1,5 +1,5 @@
-import '../base.dart';
-import '../my_user.dart';
+import '../provider/base.dart';
+import '../provider/my_user.dart';
 
 abstract class LoginNavigator implements BaseNavigator{
 

@@ -1,4 +1,4 @@
-import '../base.dart';
+import '../provider/base.dart';
 
 abstract class HomeNavigator extends BaseNavigator{
 

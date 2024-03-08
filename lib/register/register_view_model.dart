@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../base.dart';
+import '../provider/base.dart';
 import '../database_utils.dart';
-import '../firebase_errors.dart';
-import '../my_user.dart';
+import '../provider/firebase_errors.dart';
+import '../provider/my_user.dart';
 import 'navigator.dart';
 
 // provider

@@ -21,7 +21,7 @@ abstract class BaseState<T extends StatefulWidget, VM extends BaseViewModel>
     viewModel = initViewModel();
   }
   @override
-  void showLoading({String message='Loading',bool isDismissable=true}) {
+  void showLoading({String message='  Loading...',bool isDismissable=true}) {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
