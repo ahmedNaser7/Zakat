@@ -29,80 +29,168 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-      return false;
-    },
-    child: Scaffold(
-      appBar: AppBar(
-        title: Text('Zakat Calculator'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TextFormField(
-                controller: goldPriceController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Gold Price per Gram'),
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+          return false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Zakat Calculator'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextField(
+                    controller: goldPriceController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Gold Price per Gram',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: silverPriceController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Silver Price per Gram',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: cashController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Cash on hand',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: goldWeightController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Gold (in grams)',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: silverWeightController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Silver (in grams)',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: inventoryController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Business inventory value',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: investmentsController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Investments value',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: debtsController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Total debts',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 4.0), // Set the border color
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      calculateZakat();
+                      showZakatResultsDialog();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.blue), // Set the background color
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white), // Set the text color
+                    ),
+                    child: Text('Calculate'),
+                  ),
+                ],
               ),
-              TextFormField(
-                controller: silverPriceController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Silver Price per Gram'),
-              ),
-              TextFormField(
-                controller: cashController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Cash on hand'),
-              ),
-              TextFormField(
-                controller: goldWeightController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Gold (in grams)'),
-              ),
-              TextFormField(
-                controller: silverWeightController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Silver (in grams)'),
-              ),
-              TextFormField(
-                controller: inventoryController,
-                keyboardType: TextInputType.number,
-                decoration:
-                    InputDecoration(labelText: 'Business inventory value'),
-              ),
-              TextFormField(
-                controller: investmentsController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Investments value'),
-              ),
-              TextFormField(
-                controller: debtsController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Total debts'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  calculateZakat();
-                },
-                child: Text('Calculate'),
-              ),
-              SizedBox(height: 20),
+            ),
+          ),
+        ));
+  }
+
+  void showZakatResultsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Zakat Calculation Results',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Text(
                   'Zakat Amount for cash: ${cashzakatAmount.toStringAsFixed(2)} EGP'),
               Text(
@@ -113,11 +201,17 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                   'Total Zakat Amount: ${totalzakatAmount.toStringAsFixed(2)} EGP'),
             ],
           ),
-        ),
-      ),
-    )
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the AlertDialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
     );
-
   }
 
   void calculateZakat() async {
@@ -213,13 +307,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
     });
 
     // Update total_zakat
-    MyUser? currentUser = Provider.of<UserProvider>(context, listen: false).user;
+    MyUser? currentUser =
+        Provider.of<UserProvider>(context, listen: false).user;
     if (currentUser != null) {
       double updatedTotalZakat = totalzakatAmount;
       currentUser.total_zakat = updatedTotalZakat;
       await DataBaseUtils.updateUser(currentUser);
       Provider.of<UserProvider>(context, listen: false).user = currentUser;
-
     }
   }
 }
