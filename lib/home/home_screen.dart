@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:my_zakat/business_logic/knowledge_base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_zakat/provider/my_user.dart';
